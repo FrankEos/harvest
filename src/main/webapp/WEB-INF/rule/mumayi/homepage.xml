@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+	<!-- <var-def name="pageUrl">http://www.mumayi.com</var-def> -->
+
+	<var-def name="homepage">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='navson main hidden']/ul[@class='menu fl hidden']">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+							<http-header name="Referer">
+								http://www.mumayi.com
+							</http-header>
+							<http-header name="User-Agent">
+								Mozilla/5.0 (Windows NT 6.1; WOW64)
+								AppleWebKit/537.36 (KHTML, like Gecko)
+								Chrome/45.0.2454.85
+								Safari/537.36
+							</http-header>
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				NOT FOUND
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="game">
+		<try>
+			<body>
+				<xpath expression="//li[2]/a/@href">
+					<var name="homepage" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="app">
+		<try>
+			<body>
+				<xpath expression="//li[3]/a/@href">
+					<var name="homepage" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+		<template>
+			${game}
+			${app}
+		</template>
+	</var-def>
+
+	<!-- <file action="write" type="text" path="/home/frankzhang/mumayi/debug.log"> 
+		<var name="xmlcontent" /> </file> -->
+</config>

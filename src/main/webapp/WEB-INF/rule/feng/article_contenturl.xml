@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+<!-- 	<var-def name="pageUrl">http://game.feng.com/gamenew/infoDetail/2015-12-18/_small_partner_dragon_evaluation_with_the_company_to_guide_children_education_91493.shtml
+	</var-def> -->
+	<var-def name="contents">
+		<try>
+			<body>
+				<xpath expression="//div[@class='freeDetail']">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="UTF-8">
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="title">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='wrap clearfix']/div[@class='articalSection']/h3[@class='title']/text()">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="text">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='wrap clearfix']/div[@class='articalSection']/div[@id='article_mobile_content']">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="imageUrls">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='wrap clearfix']/div[@class='articalSection']/div[@id='article_mobile_content']//img/@src">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="titlepic">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='wrap clearfix']/div[@class='moudleList']//div[@class='appStatus']/div[@class='score']/a[@class='appPic']/img/@src">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="game">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='wrap clearfix']/div[@class='moudleList']//div[@class='appStatus']/h3/em/text()">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+		<template>
+			<![CDATA[<?xml version="1.0" encoding="UTF-8"?><info>]]>
+            <![CDATA[<title>${title}</title>]]>
+            <![CDATA[<text>${text}</text>]]>
+            <![CDATA[<titlepic>${titlepic}</titlepic>]]>
+            <![CDATA[<game>${game}</game>]]>
+            <![CDATA[<images>${imageUrls}</images>]]>
+            <![CDATA[</info>]]>
+		</template>
+	</var-def>
+
+ <file action="write" type="text" path="/home/frankzhang/vipcn/debug.log"> 
+		<var name="xmlcontent" /> </file>
+</config>

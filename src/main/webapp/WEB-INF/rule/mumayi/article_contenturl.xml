@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+
+<!-- 	<var-def name="pageUrl">http://www.mumayi.cn/huodong/zuixinhuodong/2015-1027-211774.shtml
+	</var-def> -->
+
+	
+	<var-def name="contents">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='main clearf lineBg']/div[@class='boxLeft fl']">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+							<http-header name="Referer">
+								http://www.mumayi.com
+							</http-header>
+							<http-header name="User-Agent">
+								Mozilla/5.0 (Windows NT 6.1; WOW64)
+								AppleWebKit/537.36 (KHTML, like Gecko)
+								Chrome/45.0.2454.85
+								Safari/537.36
+							</http-header>
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="title">
+		<try>
+			<body>
+				<xpath expression="//h1/text()">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="text">
+		<try>
+			<body>
+				<xpath expression="//div[@class='infoBox']/div[@id='article-content']">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="imageUrls">
+		<try>
+			<body>
+				<xpath expression="//div[@class='infoBox']/div[@id='article-content']//img/@src">
+					<var name="contents" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+		<template>
+            <![CDATA[<info>]]>
+            <![CDATA[<title>${title}</title>]]>
+            <![CDATA[<images>${imageUrls}</images>]]>
+            <![CDATA[</info>]]>
+		</template>
+	</var-def>
+
+
+<!-- 	<file action="write" type="text" path="/home/frankzhang/mumayi/debug.log">
+		<var name="xmlcontent" />
+	</file> -->
+
+</config>

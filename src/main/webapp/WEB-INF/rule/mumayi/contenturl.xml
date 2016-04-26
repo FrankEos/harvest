@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+
+	<!-- <var-def name="pageUrl">http://www.mumayi.com/android-15802.html</var-def> -->
+
+	<var-def name="app_details">
+		<try>
+			<body>
+				<xpath expression="//div[@class='main960']/div[@class='w670 fl']">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+							<http-header name="Referer">
+								http://www.mumayi.com
+							</http-header>
+							<http-header name="User-Agent">
+								Mozilla/5.0 (Windows NT 6.1; WOW64)
+								AppleWebKit/537.36 (KHTML, like Gecko)
+								Chrome/45.0.2454.85
+								Safari/537.36
+							</http-header>
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				NOT FOUND
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="title">
+		<try>
+			<body>
+				<xpath
+					expression="//div['main960']/div[@class='iapp_hd mart10']/h1[@class='iappname hidden fl']/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="titlepic">
+		<try>
+			<body>
+				<xpath
+					expression="//div['iapp_hd mart10']/div[@class='ibigicon hidden']/div/img/@src">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="version">
+		<try>
+			<body>
+				<xpath
+					expression="//div['main960']/div[@class='iapp_hd mart10']/h1[@class='iappname hidden fl']/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="link">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='ibor2 w668 padt6 stylebox']/ul[@class='istyle fl']/li[2]/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="update">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='ibor2 w668 padt6 stylebox']/ul[@class='istyle fl']/li[3]/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="star">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='ibor2 w668 padt6 stylebox']/ul[@class='istyle fl']/li[@class='isli stars']/div[@id='starlist']/@class">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="filesize">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='ibor2 w668 padt6 stylebox']/ul[@class='istyle fl']/li[4]/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="system">
+		<try>
+			<body>
+				<xpath
+					expression="//div['ibor2 w668 padt6 stylebox']/ul[@class='istyle fl']/li[@class='isli pos_rel400']/ul/li/div[@class='sel_text fl']/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="softsay">
+		<try>
+			<body>
+				<xpath
+					expression="//div['ibor w668 mart10 hidden']/div[@class='ibox']/p[2]/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="imageUrls">
+		<try>
+			<body>
+				<xpath
+					expression="//div['ibor w668 mart10 hidden']/div[@class='ibox']/img/@src2">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="downloadUrl">
+		<try>
+			<body>
+				<xpath
+					expression="//div['ibor2 w668 padt6 stylebox']/div[@class='ibtn fl']/a[@class='download fl']/@href">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+		<template>
+            <![CDATA[<info>]]>
+            <![CDATA[<title>${title}</title>]]>
+            <![CDATA[<titlepic>${titlepic}</titlepic>]]>
+            <![CDATA[<version>${version}</version>]]>
+            <![CDATA[<star>${star}</star>]]>
+            <![CDATA[<link>${link}</link>]]>
+            <![CDATA[<update>${update}</update>]]>
+            <![CDATA[<filesize>${filesize}</filesize>]]>
+            <![CDATA[<system>${system}</system>]]>
+            <![CDATA[<softsay>${softsay}</softsay>]]>
+            <![CDATA[<downpath>${downloadUrl}</downpath>]]>
+            <![CDATA[<morepic>${imageUrls}</morepic>]]>
+            <![CDATA[</info>]]>
+		</template>
+	</var-def>
+
+
+<!-- 
+	<file action="append" type="text" path="/home/frankzhang/mumayi/debug.log">
+		<var name="xmlcontent" />
+	</file>
+ -->
+
+
+</config>
+

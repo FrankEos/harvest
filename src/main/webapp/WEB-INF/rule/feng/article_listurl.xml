@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+<!-- 	<var-def name="pageUrl">http://game.feng.com/gamenew/evaluate/jsonToInformation-page-6.shtml
+	</var-def> -->
+
+	<var-def name="products">
+		<json-to-xml>
+			<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+			</http>
+		</json-to-xml>
+	</var-def>
+
+	<var-def name="tmp">
+		<template>
+			 <![CDATA[<?xml version="1.0" encoding="UTF-8"?>]]>
+            <![CDATA[<root>]]>
+            <![CDATA[${products}]]>
+            <![CDATA[</root>]]>
+		</template>
+	</var-def>
+
+	<var-def name="xmlcontent">
+	 <![CDATA[<?xml version="1.0" encoding="UTF-8"?><apps>]]>
+		<try>
+			<body>
+				<loop item="item" index="i">
+					<list>
+						<xpath expression="//dataList">
+							<var name="tmp" />
+						</xpath>
+					</list>
+					<body>
+
+						<xquery>
+							<xq-param name="item" type="node()">
+								<var name="item" />
+							</xq-param>
+
+							<xq-expression>
+                        <![CDATA[
+							declare variable $item as node() external;
+                            let $detailUrl := data($item//article_publish/text())
+
+                            return 
+                                <list>
+                                    <detail>http://game.feng.com{$detailUrl}</detail>
+                                </list>
+                        ]]>
+
+							</xq-expression>
+						</xquery>
+					</body>
+				</loop>
+			</body>
+			<catch>
+			</catch>
+		</try>
+        <![CDATA[ </apps>]]>
+	</var-def>
+
+	<file action="write" type="text" path="/home/frankzhang/vipcn/debug.log">
+		<var name="xmlcontent" />
+	</file>
+
+</config>

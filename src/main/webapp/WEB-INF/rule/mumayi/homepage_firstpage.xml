@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<!-- <var-def name="pageUrl">http://www.mumayi.com/android/xitonggongju 
+		</var-def> -->
+
+	<var-def name="xmlcontent">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='mright clearf fr ibor mart10 loadBasic']/div[@class='pagebox Pagination spaceP']/div[@class='pagination']/label/a[1]/@href">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+							<http-header name="Referer">
+								http://www.mumayi.com
+							</http-header>
+							<http-header name="User-Agent">
+								Mozilla/5.0 (Windows NT 6.1; WOW64)
+								AppleWebKit/537.36 (KHTML, like Gecko)
+								Chrome/45.0.2454.85
+								Safari/537.36
+							</http-header>
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+			</catch>
+		</try>
+	</var-def>
+	<!-- <file action="write" type="text" path="/home/frankzhang/mumayi/debug.log"> 
+		<var name="xmlcontent" /> </file> -->
+</config>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+
+	<!-- http://gonglue.mumayi.cn/zhuanti/2.shtml http://gonglue.mumayi.cn/xinshou/1.shtml -->
+	<!-- <var-def name="pageUrl">http://www.mumayi.cn/huodong/zuixinhuodong/1.shtml 
+		</var-def> -->
+
+	<var-def name="products">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='main clearf lineBg']/div[@class='boxLeft fl']/ul">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+							<http-header name="Referer">
+								http://www.mumayi.com
+							</http-header>
+							<http-header name="User-Agent">
+								Mozilla/5.0 (Windows NT 6.1; WOW64)
+								AppleWebKit/537.36 (KHTML, like Gecko)
+								Chrome/45.0.2454.85
+								Safari/537.36
+							</http-header>
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+
+         <![CDATA[<?xml version="1.0" encoding="UTF-8"?><apps>]]>
+		<try>
+			<body>
+				<loop item="item" index="i">
+					<list>
+						<xpath expression="//li">
+							<var name="products" />
+						</xpath>
+					</list>
+					<body>
+
+						<xquery>
+							<xq-param name="item" type="node()">
+								<var name="item" />
+							</xq-param>
+
+							<xq-expression>
+                        <![CDATA[
+							declare variable $item as node() external;
+                            let $detailUrl := data($item//h3/a/@href)
+
+                            return 
+                                <list>
+                                    <detail>{$detailUrl}</detail>
+                                </list>
+                        ]]>
+
+							</xq-expression>
+						</xquery>
+					</body>
+				</loop>
+			</body>
+			<catch>
+			</catch>
+		</try>
+        <![CDATA[ </apps>]]>
+
+	</var-def>
+
+	<!-- <file action="write" type="text" path="/home/frankzhang/mumayi/debug.log"> 
+		<var name="xmlcontent" /> </file> -->
+
+</config>

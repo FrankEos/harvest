@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+
+<!-- http://game.feng.com/gamenew/store/index-page-1-type-iPad.shtml -->
+<!-- http://game.feng.com/gamenew/store/index-page-1-type-iPhone.shtml  -->
+<!-- 	<var-def name="pageUrl">http://game.feng.com/gamenew/store/index-page-1-type-iPhone.shtml</var-def> -->
+
+	<var-def name="products">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@id='game_list']/ul">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+
+         <![CDATA[<?xml version="1.0" encoding="UTF-8"?><apps>]]>
+		<try>
+			<body>
+				<loop item="item" index="i">
+					<list>
+						<xpath expression="//li">
+							<var name="products" />
+						</xpath>
+					</list>
+					<body>
+
+						<xquery>
+							<xq-param name="item" type="node()">
+								<var name="item" />
+							</xq-param>
+
+							<xq-expression>
+                        <![CDATA[
+							declare variable $item as node() external;
+                            let $detailUrl := data($item//div[@class='img']/a[@class='app-img']/@href)
+
+                            return 
+                                <list>
+                                    <detail>http://game.feng.com{$detailUrl}</detail>
+                                </list>
+                        ]]>
+
+							</xq-expression>
+						</xquery>
+					</body>
+				</loop>
+			</body>
+			<catch>
+			</catch>
+		</try>
+        <![CDATA[ </apps>]]>
+
+	</var-def>
+
+<!-- 	<file action="write" type="text" path="/home/frankzhang/mumayi/debug.log"> 
+		<var name="xmlcontent" /> </file> -->
+
+</config>

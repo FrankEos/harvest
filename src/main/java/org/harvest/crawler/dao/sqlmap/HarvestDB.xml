@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.harvest.crawler.dao.HarvestDBManager">
+
+	<!-- aguo android tables -->
+
+	<insert id="insertApp" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_andriod` (`classid`,`title`,`newstime`,`userid`,`username`,`ispic`,`havehtml`,`groupid`,
+            `titlepic`,`version`,`softsay`,`downpath`,`filesize`,`system`,`star`,`link`,`morepic`,`language`,`title_version_md5`,`lastdotime`,`truetime`) 
+        VALUES (#{classid},#{title},#{newstime},"1","admin", "1","0","0",#{titlepic},#{version},#{softsay},#{downpath},#{filesize},#{system},#{star},#{title},#{morepic},#{language},#{md5},#{truetime},#{truetime})
+    ]]>
+	</insert>
+
+	<insert id="insertAppToData1" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_andriod_data_1` (`id`,`classid`) 
+        VALUES (#{id}, #{classid})
+    ]]>
+	</insert>
+
+	<insert id="insertAppToIndex" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_andriod_index` (`id`,`classid`,`checked`,`newstime`,`truetime`,`lastdotime`,`havehtml`) 
+        VALUES (#{id},#{classid},"1",#{newstime},#{truetime},#{truetime},"0")
+    ]]>
+	</insert>
+
+	<select id="selectLastId" resultType="java.lang.Integer">
+        <![CDATA[
+            select last_insert_id()
+        ]]>
+	</select>
+
+	<update id="updateExtra" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_andriod`
+            set filename = #{filename},titleurl = #{titleurl}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateTitlePic" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_andriod`
+            set titlepic = #{titlepic}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateDownPath" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_andriod`
+            set downpath = #{downpath}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateMorePic" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_andriod`
+            set morepic = #{morepic}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<select id="selectMd5" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select title_version_md5 from `aguo_ecms_andriod`
+        ]]>
+		<where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectClassId" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+        <![CDATA[
+            select classid from `aguo_ecms_andriod`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</select>
+
+
+	<select id="selectIdbyMd5" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+        <![CDATA[
+            select id from `aguo_ecms_andriod`
+        ]]>
+		<where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectId" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_andriod`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</select>
+
+	<delete id="deleteById" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_andriod`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</delete>
+
+	<delete id="deleteData1ById" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_andriod_data_1`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</delete>
+
+	<delete id="deleteIndexById" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_andriod_index`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</delete>
+
+	<!-- aguo distinct database -->
+
+	<insert id="insertImgMd5" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT INTO `spider_img_md5` (`file_md5`,`file_path`,`file_abs_path`,`insert_time`) 
+		VALUES (#{file_md5},#{file_path},#{file_abs_path},#{insert_time})
+	]]>
+	</insert>
+
+	<insert id="insertApkMd5" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `spider_apk_md5` (`file_md5`,`file_path`,`file_abs_path`,`insert_time`) 
+		VALUES (#{file_md5},#{file_path},#{file_abs_path},#{insert_time})
+    ]]>
+	</insert>
+
+	<select id="selectImgMd5" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_md5 from `spider_img_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectImgFilePath" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_abs_path from `spider_img_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectImgUrl" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_path from `spider_img_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectApkMd5" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_md5 from `spider_apk_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectApkFilePath" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_abs_path from `spider_apk_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectApkUrl" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_path from `spider_apk_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+
+	<!--Aguo Article Tables -->
+	<insert id="insertArticle" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_article` (`classid`,`title`,`newstime`,`titlepic`,`smalltext`,`newstext`,`game`,`smalltext_md5`,`truetime`,`lastdotime`,
+        	`userid`,`username`,`ispic`,`havehtml`,`groupid`)
+        VALUES (#{classid},#{title},#{newstime},#{titlepic},#{smalltext},#{newstext},#{game},#{smalltext_md5},#{truetime},#{truetime},"1","admin", "1","0","0")
+    ]]>
+	</insert>
+
+	<insert id="insertArticleToData1" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_article_data_1` (`id`,`classid`) 
+        VALUES (#{id}, #{classid})
+    ]]>
+	</insert>
+
+	<insert id="insertArticleToIndex" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_article_index` (`id`,`classid`,`checked`,`newstime`,`truetime`,`lastdotime`,`havehtml`) 
+        VALUES (#{id},#{classid},"1",#{newstime},#{truetime},#{truetime},"0")
+    ]]>
+	</insert>
+
+	<update id="updateArticleExtra" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_article`
+            set filename = #{filename},titleurl = #{titleurl}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateArticleTitlePic" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_article`
+            set titlepic = #{titlepic}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<delete id="deleteArticleById" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_article`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</delete>
+
+	<select id="selectArticle" parameterType="java.util.Map"
+		resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_article`
+        ]]>
+		<where>
+            <![CDATA[
+                smalltext_md5 = #{smalltext_md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectArticleId" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+        <![CDATA[
+            select id from `aguo_ecms_article`
+        ]]>
+		<where>
+            <![CDATA[
+                smalltext_md5 = #{smalltext_md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectArticleById" parameterType="java.util.Map"
+		resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_article`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectArticleContent" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select smalltext from `aguo_ecms_article`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</select>
+
+	<update id="updateArticleContent" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_article`
+            set smalltext = #{smalltext}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<!--Aguo Edu Tables -->
+	<insert id="insertEdu" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_edu` (`classid`,`title`,`newstime`,`titlepic`,`smalltext`,`smalltext_md5`,`type`,`truetime`,`lastdotime`,
+        	`userid`,`username`,`ispic`,`havehtml`,`groupid`)
+        VALUES (#{classid},#{title},#{newstime},#{titlepic},#{smalltext},#{smalltext_md5},#{type},#{truetime},#{truetime},"1","admin", "1","0","0")
+    ]]>
+	</insert>
+
+	<insert id="insertEduToData1" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_edu_data_1` (`id`,`classid`,`newstext`) 
+        VALUES (#{id}, #{classid}, #{smalltext})
+    ]]>
+	</insert>
+
+	<insert id="insertEduToIndex" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_edu_index` (`id`,`classid`,`checked`,`newstime`,`truetime`,`lastdotime`,`havehtml`) 
+        VALUES (#{id},#{classid},"1",#{newstime},#{truetime},#{truetime},"0")
+    ]]>
+	</insert>
+
+	<update id="updateEduExtra" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_edu`
+            set filename = #{filename},titleurl = #{titleurl}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateEduTitlePic" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_edu`
+            set titlepic = #{titlepic}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<delete id="deleteEduById" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_edu`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</delete>
+
+	<select id="selectEdu" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_edu`
+        ]]>
+		<where>
+            <![CDATA[
+                smalltext_md5 = #{smalltext_md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectEduId" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+        <![CDATA[
+            select id from `aguo_ecms_edu`
+        ]]>
+		<where>
+            <![CDATA[
+                smalltext_md5 = #{smalltext_md5} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectEduById" parameterType="java.util.Map"
+		resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_edu`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectEduContent" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select smalltext from `aguo_ecms_edu`
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+		</where>
+	</select>
+
+	<update id="updateEduContent" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_edu`
+            set smalltext = #{smalltext}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+	<update id="updateEduData1Newstext" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_edu_data_1`
+            set newstext = #{smalltext}
+        ]]>
+		<where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+		</where>
+	</update>
+
+    <!-- aguo iphone tables -->
+    <insert id="insertIpaMd5" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `spider_ipa_md5` (`file_md5`,`file_path`,`file_abs_path`,`insert_time`) 
+        VALUES (#{file_md5},#{file_path},#{file_abs_path},#{insert_time})
+    ]]>
+    </insert>
+
+	<select id="selectIpaMd5" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_md5 from `spider_ipa_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectIpaFilePath" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_abs_path from `spider_ipa_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+	<select id="selectIpaUrl" parameterType="java.util.Map"
+		resultType="java.lang.String">
+        <![CDATA[
+            select file_path from `spider_ipa_md5`
+        ]]>
+		<where>
+            <![CDATA[
+                file_md5 = #{file_md5}
+            ]]>
+		</where>
+	</select>
+
+    <insert id="insertAppiPhone" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_iphone` (`classid`,`title`,`newstime`,`userid`,`username`,`ispic`,`havehtml`,`groupid`,
+            `titlepic`,`version`,`softsay`,`downpath`,`filesize`,`system`,`star`,`link`,`morepic`,`language`,`ipadown`,`title_version_md5`,`lastdotime`,`truetime`) 
+        VALUES (#{classid},#{title},#{newstime},"1","admin", "1","0","0",#{titlepic},#{version},#{softsay},#{downpath},#{filesize},#{system},#{star},#{title},#{morepic},#{language},"",#{md5},#{truetime},#{truetime})
+    ]]>
+    </insert>
+
+    <insert id="insertAppToData1iPhone" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_iphone_data_1` (`id`,`classid`) 
+        VALUES (#{id}, #{classid})
+    ]]>
+    </insert>
+
+    <insert id="insertAppToIndexiPhone" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_iphone_index` (`id`,`classid`,`checked`,`newstime`,`truetime`,`lastdotime`,`havehtml`) 
+        VALUES (#{id},#{classid},"1",#{newstime},#{truetime},#{truetime},"0")
+    ]]>
+    </insert>
+
+    <update id="updateExtraiPhone" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_iphone`
+            set filename = #{filename},titleurl = #{titleurl}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateTitlePiciPhone" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_iphone`
+            set titlepic = #{titlepic}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateDownPathiPhone" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_iphone`
+            set downpath = #{downpath}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateIpaDowniPhone" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_iphone`
+            set ipadown = #{ipadown}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateMorePiciPhone" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_iphone`
+            set morepic = #{morepic}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <select id="selectMd5iPhone" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select title_version_md5 from `aguo_ecms_iphone`
+        ]]>
+        <where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+        </where>
+    </select>
+
+    <select id="selectClassIdiPhone" parameterType="java.util.Map"
+        resultType="java.lang.Integer">
+        <![CDATA[
+            select classid from `aguo_ecms_iphone`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </select>
+
+
+    <select id="selectIdbyMd5iPhone" parameterType="java.util.Map"
+        resultType="java.lang.Integer">
+        <![CDATA[
+            select id from `aguo_ecms_iphone`
+        ]]>
+        <where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+        </where>
+    </select>
+
+    <select id="selectIdiPhone" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_iphone`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </select>
+
+    <delete id="deleteByIdiPhone" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_iphone`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+
+    <delete id="deleteData1ByIdiPhone" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_iphone_data_1`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+
+    <delete id="deleteIndexByIdiPhone" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_iphone_index`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+    <!-- aguo iphone tables end -->
+    
+    <!-- aguo ipad tables begin -->
+    
+    <insert id="insertAppiPad" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_ipad` (`classid`,`title`,`newstime`,`userid`,`username`,`ispic`,`havehtml`,`groupid`,
+            `titlepic`,`version`,`softsay`,`downpath`,`filesize`,`system`,`star`,`link`,`morepic`,`language`,`ipadown`,`title_version_md5`,`lastdotime`,`truetime`) 
+        VALUES (#{classid},#{title},#{newstime},"1","admin", "1","0","0",#{titlepic},#{version},#{softsay},#{downpath},#{filesize},#{system},#{star},#{title},#{morepic},#{language},"",#{md5},#{truetime},#{truetime})
+    ]]>
+    </insert>
+
+    <insert id="insertAppToData1iPad" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_ipad_data_1` (`id`,`classid`) 
+        VALUES (#{id}, #{classid})
+    ]]>
+    </insert>
+
+    <insert id="insertAppToIndexiPad" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO `aguo_ecms_ipad_index` (`id`,`classid`,`checked`,`newstime`,`truetime`,`lastdotime`,`havehtml`) 
+        VALUES (#{id},#{classid},"1",#{newstime},#{truetime},#{truetime},"0")
+    ]]>
+    </insert>
+
+    <update id="updateExtraiPad" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_ipad`
+            set filename = #{filename},titleurl = #{titleurl}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateTitlePiciPad" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_ipad`
+            set titlepic = #{titlepic}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateDownPathiPad" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_ipad`
+            set downpath = #{downpath}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateIpaDowniPad" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_ipad`
+            set ipadown = #{ipadown}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <update id="updateMorePiciPad" parameterType="java.util.Map">
+        <![CDATA[
+            update `aguo_ecms_ipad`
+            set morepic = #{morepic}
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </update>
+
+    <select id="selectMd5iPad" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select title_version_md5 from `aguo_ecms_ipad`
+        ]]>
+        <where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+        </where>
+    </select>
+
+    <select id="selectClassIdiPad" parameterType="java.util.Map"
+        resultType="java.lang.Integer">
+        <![CDATA[
+            select classid from `aguo_ecms_ipad`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id}
+            ]]>
+        </where>
+    </select>
+
+
+    <select id="selectIdbyMd5iPad" parameterType="java.util.Map"
+        resultType="java.lang.Integer">
+        <![CDATA[
+            select id from `aguo_ecms_ipad`
+        ]]>
+        <where>
+            <![CDATA[
+                title_version_md5 = #{md5} 
+            ]]>
+        </where>
+    </select>
+
+    <select id="selectIdiPad" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+            select id from `aguo_ecms_ipad`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </select>
+
+    <delete id="deleteByIdiPad" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_ipad`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+
+    <delete id="deleteData1ByIdiPad" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_ipad_data_1`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+
+    <delete id="deleteIndexByIdiPad" parameterType="java.util.Map">
+        <![CDATA[
+            delete from `aguo_ecms_ipad_index`
+        ]]>
+        <where>
+            <![CDATA[
+                id = #{id} 
+            ]]>
+        </where>
+    </delete>
+    <!-- aguo ipad tables end -->
+</mapper>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config charset="UTF-8">
+<!-- 	<var-def name="pageUrl">http://game.feng.com/gamenew/read/index-id-1599492.shtml
+	</var-def> -->
+
+	<var-def name="app_details">
+		<try>
+			<body>
+				<xpath expression="//body">
+					<html-to-xml outputtype="pretty">
+						<http cookie-policy="browser" url="${pageUrl}" charset="utf-8">
+						</http>
+					</html-to-xml>
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="titlepic">
+		<try>
+			<body>
+				<xpath expression="//div[@class='gameAppBox']/div[@class='appImg']/img/@src">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="title">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/h3[@class='title']/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="link">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/p/span[@class='tag']/a/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="update">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[1]/span[1]/em/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="version">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[1]/span[2]/em/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="system">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[2]/span[1]/em/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="vendor">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[2]/span[2]/em/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="filesize">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[3]/span[1]/em/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="launage">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='infoShow']/ul/li[3]/span[2]/div/text()">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+			unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="softsay">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@id='icon_game']/div/*">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+
+	<var-def name="imageUrls">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@id='icon_clip']/div[@class='screenshot']/div[@class='pic_list']/ul/li/a/img/@src">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="downloadUrl">
+		<try>
+			<body>
+				<xpath
+					expression="//div[@class='gameDetail']/div[@class='locationbox']/div[@class='proBtn']/a[@class='appStore']/@href">
+					<var name="app_details" />
+				</xpath>
+			</body>
+			<catch>
+				unknown
+			</catch>
+		</try>
+	</var-def>
+
+	<var-def name="xmlcontent">
+		<template>
+            <![CDATA[<info>]]>
+            <![CDATA[<titlepic>http://game.feng.com${titlepic}</titlepic>]]>
+            <![CDATA[<title>${title}</title>]]>
+            <![CDATA[<link>${link}</link>]]>
+            <![CDATA[<star>0</star>]]>
+            <![CDATA[<update>${update}</update>]]>
+            <![CDATA[<version>${version}</version>]]>
+            <![CDATA[<system>${system}</system>]]>
+			<![CDATA[<vendor>${vendor}</vendor>]]>
+            <![CDATA[<filesize>${filesize}</filesize>]]>
+			<![CDATA[<launage>${launage}</launage>]]>
+            <![CDATA[<downpath>${downloadUrl}</downpath>]]>
+            <![CDATA[<morepic>${imageUrls}</morepic>]]>
+            <![CDATA[</info>]]>
+		</template>
+	</var-def>
+
+
+<!-- 	<file action="write" type="text" path="/home/frankzhang/mumayi/debug.log">
+		<var name="xmlcontent" />
+	</file> -->
+
+
+</config>
